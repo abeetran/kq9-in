@@ -13,9 +13,11 @@ class MY_Controller extends CI_Controller {
 		
 		if (in_array(uri_string(), $exception_uris) == FALSE) {
 			if (logged_in() == FALSE) {
-				redirect('auth/login');
+				return redirect('auth/login');
 			}
 		}
+		$this->data['segment_url'] = $this->uri->segment(1);
+		$this->data['system'] = $_SESSION['system'];
         
 	}
 

@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Size extends MY_Controller {
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('cms/M_sizes');
 		$this->data['obj'] = false;
 		$this->uri = isset($_GET['act'])?$_GET['act']:false;
 		$this->primary = isset($_GET['id'])?$_GET['id']:false;
@@ -36,12 +37,12 @@ class Size extends MY_Controller {
 		}
 	}
 	private function home(){
-		$this->data['obj'] = $this->M_sys->set_table('size')->set('trash',0)->set_orderby('id','DESC')->gets();
+		$this->data['obj'] = $this->M_sizes->set('trash',0)->set_orderby('id','DESC')->gets();
 		$this->data['obiview'] = 'template/size/home';
 		$this->load->view('template/_main_page',$this->data);
 	}
 	private function edit(){
-		$this->data['tong'] = $this->M_sys->set_table('size')->select('sort')->set_orderby('sort','DESC')->get();
+		$this->data['tong'] = $this->M_sizes->select('sort')->set_orderby('sort','DESC')->get();
 		if(isset($_POST['formsubmit'])){
 			$this->data['obj'] = (object)$_POST;
 		}

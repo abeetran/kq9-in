@@ -6,6 +6,7 @@ class Auth extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->data['site_name'] = 'LOGIN SYSTEM';
+		$this->load->model('cms/M_users');
 	}
 	
 	public function index(){
@@ -17,7 +18,7 @@ class Auth extends CI_Controller {
 	}
 	
 	private function loggedin(){
-		$login = $this->M_sys->sets(array('email'=>$_POST['email'],'password'=>hashpass($_POST['password'])))->set_table('users')->get();
+		$login = $this->M_users->sets(array('email'=>$_POST['email'],'password'=>hashpass($_POST['password'])))->get();
 		if($login){
 			$session['sys_logged_in'] = true;
 			$session['sys_id'] = $login->id;

@@ -38,7 +38,7 @@
 	<!-- Custom scripts for all pages-->
 	<script src="assets/js/sb-admin.min.js"></script>
 	<!-- Custom scripts for this page-->
-	<script src="assets/js/sb-admin-datatables.min.js"></script>
+	<script src="assets/js/sb-admin-datatables.js"></script>
 	</div>
 </body>
 

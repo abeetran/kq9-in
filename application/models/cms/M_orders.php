@@ -2,7 +2,7 @@
 	exit('No direct script access allowed');
 }
 
-class M_users extends CI_Model {
+class M_orders extends CI_Model {
 
 	private $table;
 	private $data;
@@ -11,8 +11,8 @@ class M_users extends CI_Model {
 	private $pageof=20;
 	public function __construct() {
 		parent::__construct();
-		$this->table='users';
-        if (!isset($this->data )) 
+		$this->table='orders';
+		if (!isset($this->data )) 
 		   $this->data = new stdClass();
 		if (!isset($this->data_like )) 
 		   $this->data_like = new stdClass();
@@ -46,7 +46,7 @@ class M_users extends CI_Model {
 		$this->db->select($select);
 		return $this;
 	}
-    // Hàm set dữ liệu //
+	// Hàm set dữ liệu //
 	public function set_meta($tag,$value) {
 		if(isset($this->data->$tag)) {
 			$this->data->$tag = $value;
@@ -62,8 +62,8 @@ class M_users extends CI_Model {
 
 		$this->data_like->$tag = $value;
 		return $this;
-    }
-    // Hàm set chuỗi dữ liệu //
+	}
+	// Hàm set chuỗi dữ liệu //
 	public function sets($array) {
 
 		foreach ($array as $k => $v) {
@@ -76,23 +76,24 @@ class M_users extends CI_Model {
 		}
 		return $this;
 	}
-    // Logic fucntion 
+	// Logic fucntion 
 	public function save() {
-        //return false;
-        $primary = $this->primary_key;
-        //var_dump($this->data->id);
+		//return false;
+		$primary = $this->primary_key;
+		//var_dump($this->data->id);
 		$this->db->where($this->primary_key,  $this->data->$primary)
 		->update($this->table,  $this->data);
+		$this->data = new stdClass();
 		return TRUE;
 	}
-    // Xóa product
+	// Xóa product
 	public function delete() {
-        $primary = $this->primary_key;
+		$primary = $this->primary_key;
 		$this->db->where($this->primary_key,  $this->data->$primary)
 		->update($this->table,array('trash'=>1));
 		return TRUE;
 	}
-    // Thêm
+	// Thêm
 	public function add($data) {
 		$this->db->insert($this->table,$data);
 		return TRUE;
@@ -101,31 +102,31 @@ class M_users extends CI_Model {
 		$this->db->insert($this->table,$data);
 		return $this->db->insert_id();
 	}
-    //
-    public function data(){
-        return $this->data;
-    }
+	//
+	public function data(){
+		$data = $this->data;
+		$this->data = new stdClass();
+		return $data;
+	}
    
-   // Lây data 
+	// Lây data 
 	public function get() {
 		if($this->data){
-	       	$get = $this->db->where((array)$this->data)->get($this->table);
-	       }
-	       else{
-	       	$get = $this->db->get($this->table);
-	       }
-	       if($get->num_rows() == 0) {
-		      return FALSE;
-	       }
-	       $this->data = new stdClass();
-	       return $get->row();
+			$get = $this->db->where((array)$this->data)->get($this->table);
+		}else{
+			$get = $this->db->get($this->table);
+		}
+		$this->data = new stdClass();
+		if($get->num_rows() == 0) {
+			return FALSE;
+		}
+		return $get->row();
 	}
 	public function page($index=1){
 		if($index){
 			if($index-1){
 				$this->db->limit(($index-1) * $this->pageof ,$index * $this->pageof  );
-			}
-			else{
+			}else{
 				$this->db->limit($this->pageof);
 			}
 		}
@@ -133,30 +134,31 @@ class M_users extends CI_Model {
 	}
 	public function counts(){
 		if($this->data){
-	 		$this->db->where((array)$this->data);
-	 	}
-	 	$this->db->from($this->table);
-	      	return $this->db->count_all_results();
+			$this->db->where((array)$this->data);
+		}
+		$this->db->from($this->table);
+		return $this->db->count_all_results();
 	}
 	public function gets(){
-		   /*if($this->data_like){
-		   	$this->db->where_like((array)$this->data_like);
-		   }*/
-	       if($this->data){
-	       	$get = $this->db->where((array)$this->data)->get($this->table);
-	       }
-	       else{
-	       	$get = $this->db->get($this->table);
-	       }
-	       $this->data = new stdClass();
-	       if($get->num_rows() == 0) {
-		return FALSE;
-	       }
-	       return $get->result();
+		/*if($this->data_like){
+		$this->db->where_like((array)$this->data_like);
+		}*/
+		if($this->data){
+			$get = $this->db->where((array)$this->data)->get($this->table);
+		}else{
+			$get = $this->db->get($this->table);
+		}
+		$this->data = new stdClass();
+		if($get->num_rows() == 0) {
+			return FALSE;
+		}
+		return $get->result();
 	}
-    
-    public function loggedin() {
-		return (bool) isset($_SESSION['system']->sys_logged_in);
+
+	public function update($where){
+		$this->db->where($where)->update($this->table,  $this->data);
+		$this->data = new stdClass();
+		return TRUE;
 	}
    
 }

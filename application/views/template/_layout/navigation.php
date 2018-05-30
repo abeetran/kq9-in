@@ -11,7 +11,7 @@
 				<span class="nav-link-text">Bảng điều khiển</span>
 				</a>
 			</li> -->
-			<li class="nav-item <?php echo $uri == 'orders'?'active':'';?>" data-toggle="tooltip" data-placement="right" title="Đơn hàng">
+			<li class="nav-item <?php echo $uri == 'orders'?'active':'';?>" data-toggle="tooltip" data-placement="right" title="Components">
 				<a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
 				<i class="fa fa-fw fa-shopping-cart"></i>
 				<span class="nav-link-text">Kinh doanh</span>
@@ -25,20 +25,20 @@
 					</li>
 				</ul>
 			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Thiết kế">
-				<a class="nav-link" href="#">
+			<li class="nav-item <?php echo $uri == 'design'?'active':'';?>" data-toggle="tooltip" data-placement="right" title="Link">
+				<a class="nav-link" href="<?php echo site_url('design')?>">
 				<i class="fa fa-fw fa-pencil"></i>
 				<span class="nav-link-text">Thiết kế</span>
 				</a>
 			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Xưởng in">
-				<a class="nav-link" href="#">
+			<li class="nav-item <?php echo $uri == 'prints'?'active':'';?>" data-toggle="tooltip" data-placement="right" title="Link">
+				<a class="nav-link" href="<?php echo site_url('prints')?>">
 				<i class="fa fa-fw fa-print"></i>
 				<span class="nav-link-text">Xưởng in</span>
 				</a>
 			</li>
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Vận chuyển">
-				<a class="nav-link" href="#">
+			<li class="nav-item <?php echo $uri == 'deliveries'?'active':'';?>" data-toggle="tooltip" data-placement="right" title="Link">
+				<a class="nav-link" href="<?php echo site_url('deliveries');?>">
 				<i class="fa fa-fw fa-truck"></i>
 				<span class="nav-link-text">Vận chuyển</span>
 				</a>

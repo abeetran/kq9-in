@@ -4,25 +4,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Color extends MY_Controller {
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('cms/M_colors');
 		$this->data['obj'] = false;
 		$this->uri = isset($_GET['act'])?$_GET['act']:false;
 		$this->primary = isset($_GET['id'])?$_GET['id']:false;
 		if($this->primary){
-			$this->get = $this->M_sys->set_table('color')->get_by_key($this->primary);
+			$this->get = $this->M_colors->get_by_key($this->primary);
 		}
 	}
 	public function index(){
 		switch (true) {
 			case $this->uri=='upd':
 				if(isset($_POST['formsubmit'])){
-					$this->form_validation->set_rules(
-						'color',
-						'Màu sắc','required|xss_clean',array("required"=>"Tên màu sắc không được để trống")
-					);
-					if($this->form_validation->run()==false){
-						$this->edit();
-					}else{
+					if($_POST["color"]!==''){
 						$this->save();
+					}else{
+						validationFrom();
+						if($this->form_validation->run()==false)
+							$this->edit();
 					}
 				}else{
 					$this->edit();
@@ -38,7 +37,7 @@ class Color extends MY_Controller {
 		}
 	}
 	private function home(){
-		$this->data['obj'] = $this->M_sys->set_table('color')->set('trash',0)->set_orderby('id','DESC')->gets();
+		$this->data['obj'] = $this->M_colors->set('trash',0)->set_orderby('id','DESC')->gets();
 		$this->data['obiview'] = 'template/color/home';
 		$this->load->view('template/_main_page',$this->data);
 	}

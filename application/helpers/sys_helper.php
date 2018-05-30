@@ -38,3 +38,24 @@ function message($tag = 'span', $type = 'normal', $msg = NULL) {
 	}
 	return "<$tag class=\"$class\">$msg</$tag>";
 }
+
+function validationFrom(){
+	$CI =& get_instance();
+
+	//cottons
+	$CI->form_validation->set_rules(
+		'cotton',
+		'Vải','required|xss_clean',array("required"=>"Tên loại vải không được để trống")
+	);
+
+	//color
+	$CI->form_validation->set_rules(
+		'color',
+		'Màu sắc','required|xss_clean',array("required"=>"Tên màu sắc không được để trống")
+	);
+
+	/*$CI->form_validation->set_rules(
+		'code',
+		'','required|xss_clean',array("required"=>"Mã đơn hàng không được để trống")
+	);*/
+}
